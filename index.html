@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cuckoo Clock</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <style>
+    body{
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        align-items: center;
+        overflow: hidden;
+        background: radial-gradient(transparent,#fffcdc);
+    }
+    .box{
+        width: 900px;
+        height: 900px;
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        background: url("img/analog-clock.png") center center/cover;
+    }
+    .circle{
+        width: 310.5px;
+        height: 310.5px;
+        border: 1px solid rgb(101,81,81);
+        border-radius: 50%;
+        position: relative;
+    }
+    .jmin{
+        /*分針*/
+        width: 18px;
+        height: 310.5px;
+        background: url('img/min.png') center center/cover;
+        position: absolute;
+        left: 50%;
+        margin-left: -9px; /* 18px/2 */
+        animation: j_m 3600s infinite linear;        
+    }
+    .jhour{
+        /*時針*/
+        width: 18px;
+        height: 310.5px;
+        background: url('img/hour.png') center center/cover;
+        position: absolute;
+        left: 50%;
+        margin-left: -9px; /* 16px/2 */
+        animation: j_h 43200s infinite linear;        
+    }
+    .jsec{
+        /*秒針*/
+        width: 18px;
+        height: 310.5px;
+        background: url('img/sec.png') center center/cover;
+        position: absolute;
+        left: 50%;
+        margin-left: -9px; /* 16px/2 */
+        animation: j_s 60s infinite linear;        
+    }
+    .bird{
+        position: absolute;
+        animation: bird 2s linear infinite;
+        z-index: -100;
+    }
+    @keyframes bird{
+        from{
+            transform: rotate(15deg);
+        }
+        50%{
+            transform: rotate(-15deg);
+        }
+        to{
+            transform: rotate(15deg);
+        }
+    }
+    </style>
+    <script>
+        var time=new Date();
+        var pos_s=time.getSeconds();
+        var pos_m=time.getMinutes();
+        var pos_h=time.getHours();
+        var x=pos_s*6;
+        var y=pos_m*6+pos_s*0.1;
+        var z=pos_h*30+pos_m*0.5;
+        document.write(`
+        <style>
+            @keyframes j_s{
+                from{transform: rotate(${x}deg);}
+                to{transform: rotate(${360+x}deg);}
+            }
+            @keyframes j_m{
+                from{transform: rotate(${y}deg);}
+                to{transform: rotate(${360+y}deg);}
+            }
+            @keyframes j_h{
+                from{transform: rotate(${z}deg);}
+                to{transform: rotate(${360+z}deg);}
+            }
+        </style>
+        `);
+    </script>
+</head>
+<body>
+    <img class="bird" src="img/bird.png" width="900px" height="900px">
+    <div class="box">
+        <div class="circle">
+            <div class="jmin"></div>
+            <div class="jhour"></div>
+            <div class="jsec"></div>
+        </div>
+    </div>
+</body>
+</html>
